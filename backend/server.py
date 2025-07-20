@@ -173,7 +173,7 @@ async def get_product(product_id: str):
 async def get_products_by_category(category: str):
     """Get products by category"""
     try:
-        products = await db.products.find({"category": category}).to_list(100)
+        products = await db.products.find({"category": category}, {"_id": 0}).to_list(100)
         return products
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

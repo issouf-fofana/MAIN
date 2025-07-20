@@ -261,8 +261,13 @@ class BackendTester:
                     self.log_test(f"GET /api/orders/{order_id}", False, f"Missing fields: {missing}")
                     return None
             elif response.status_code == 404:
-                self.log_test(f"GET /api/orders/{order_id}", True, "Correctly returns 404 for non-existent order")
-                return None
+                error_detail = response.json().get("detail", "")
+                if "not found" in error_detail.lower():
+                    self.log_test(f"GET /api/orders/{order_id}", True, "Correctly returns 404 for non-existent order")
+                    return None
+                else:
+                    self.log_test(f"GET /api/orders/{order_id}", False, f"Unexpected 404 response: {error_detail}")
+                    return None
             else:
                 self.log_test(f"GET /api/orders/{order_id}", False, f"Status: {response.status_code}")
                 return None

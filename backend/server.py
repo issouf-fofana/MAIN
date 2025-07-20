@@ -153,7 +153,7 @@ async def startup_event():
 async def get_products():
     """Get all products"""
     try:
-        products = await db.products.find({}).to_list(100)
+        products = await db.products.find({}, {"_id": 0}).to_list(100)
         return products
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

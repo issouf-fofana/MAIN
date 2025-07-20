@@ -223,7 +223,7 @@ async def create_order(order_data: OrderCreate):
 async def get_order(order_id: str):
     """Get order details"""
     try:
-        order = await db.orders.find_one({"id": order_id})
+        order = await db.orders.find_one({"id": order_id}, {"_id": 0})
         if not order:
             raise HTTPException(status_code=404, detail="Order not found")
         return order

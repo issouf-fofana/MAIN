@@ -162,7 +162,7 @@ async def get_products():
 async def get_product(product_id: str):
     """Get single product"""
     try:
-        product = await db.products.find_one({"id": product_id})
+        product = await db.products.find_one({"id": product_id}, {"_id": 0})
         if not product:
             raise HTTPException(status_code=404, detail="Product not found")
         return product

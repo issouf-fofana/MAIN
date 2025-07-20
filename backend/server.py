@@ -231,7 +231,7 @@ async def get_order(order_id: str):
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.put("/api/orders/{order_id}/status")
-async def update_order_status(order_id: str, status: str):
+async def update_order_status(order_id: str, status: str = Query(...)):
     """Update order status (admin function)"""
     try:
         result = await db.orders.update_one(
